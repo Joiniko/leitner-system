@@ -322,7 +322,7 @@ Scénario: Créer une carte avec succès
 
 ## 👥 Équipe
 
-Projet réalisé dans le cadre du module d'architecture logicielle.
+Projet réalisé dans le cadre du module de clean code.
 
 ## 📄 Licence
 
