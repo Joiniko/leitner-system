@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture - Système de Leitner</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .diagram-section {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        .diagram-section h2 {
+            color: #4f46e5;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #4f46e5;
+            font-size: 1.5rem;
+        }
+        .diagram-section h3 {
+            color: #6b7280;
+            margin: 20px 0 10px 0;
+            font-size: 1.1rem;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .legend {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .legend h4 {
+            color: #4f46e5;
+            margin-bottom: 10px;
+        }
+        .legend ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 8px;
+        }
+        .legend li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        .legend .color-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        .print-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.5);
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .diagram-section {
+                box-shadow: none;
+                border: 1px solid #e5e7eb;
+                page-break-inside: avoid;
+            }
+            .print-btn {
+                display: none;
+            }
+            h1 {
+                color: #1f2937;
+                text-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Architecture du Système de Leitner</h1>
+
+        <!-- Diagramme 1: Architecture Globale -->
+        <div class="diagram-section">
+            <h2>1. Architecture Globale (Vue d'ensemble)</h2>
+            <div class="mermaid">
+graph TB
+    subgraph CLIENT["🖥️ CLIENT"]
+        WEB["🌐 Application Web<br/>React + TypeScript"]
+    end
+
+    subgraph BACKEND["⚙️ BACKEND - Spring Boot"]
+        subgraph INFRA_IN["Infrastructure - Adapters IN"]
+            REST["🔌 REST Controller<br/>CardController"]
+        end
+        
+        subgraph DOMAIN["💎 DOMAIN"]
+            SVC["CardService"]
+            CARD["Card Entity"]
+            CAT["Category Enum"]
+        end
+        
+        subgraph INFRA_OUT["Infrastructure - Adapters OUT"]
+            REPO["💾 InMemory Repository"]
+        end
+    end
+
+    WEB -->|"HTTP/JSON"| REST
+    REST --> SVC
+    SVC --> CARD
+    SVC --> CAT
+    SVC --> REPO
+
+    style CLIENT fill:#e0f2fe,stroke:#0284c7
+    style BACKEND fill:#f0fdf4,stroke:#16a34a
+    style DOMAIN fill:#fef3c7,stroke:#d97706
+    style INFRA_IN fill:#fce7f3,stroke:#db2777
+    style INFRA_OUT fill:#ede9fe,stroke:#7c3aed
+            </div>
+            <div class="legend">
+                <h4>Légende</h4>
+                <ul>
+                    <li><span class="color-box" style="background:#e0f2fe;border:1px solid #0284c7"></span> Client (Frontend React)</li>
+                    <li><span class="color-box" style="background:#f0fdf4;border:1px solid #16a34a"></span> Backend Spring Boot</li>
+                    <li><span class="color-box" style="background:#fef3c7;border:1px solid #d97706"></span> Domaine métier (DDD)</li>
+                    <li><span class="color-box" style="background:#fce7f3;border:1px solid #db2777"></span> Adapters d'entrée (Driving)</li>
+                    <li><span class="color-box" style="background:#ede9fe;border:1px solid #7c3aed"></span> Adapters de sortie (Driven)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Diagramme 2: Architecture Hexagonale -->
+        <div class="diagram-section">
+            <h2>2. Architecture Hexagonale Détaillée</h2>
+            <div class="mermaid">
+graph LR
+    subgraph DRIVING["DRIVING SIDE (Primary)"]
+        HTTP["HTTP Request"]
+        CTRL["CardController<br/>(REST Adapter)"]
+    end
+
+    subgraph PORTS_IN["PORTS IN (Use Cases)"]
+        UC1["CreateCardUseCase"]
+        UC2["GetCardsUseCase"]
+        UC3["GetQuizCardsUseCase"]
+        UC4["AnswerCardUseCase"]
+    end
+
+    subgraph CORE["DOMAIN CORE"]
+        SERVICE["CardService"]
+        ENTITY["Card + Category"]
+        RULES["Leitner Rules"]
+    end
+
+    subgraph PORTS_OUT["PORTS OUT (SPI)"]
+        REPO_IF["CardRepository<br/>(Interface)"]
+        USER_IF["UserRepository<br/>(Interface)"]
+    end
+
+    subgraph DRIVEN["DRIVEN SIDE (Secondary)"]
+        INMEM["InMemoryCardRepository"]
+        FUTURE["JPA Repository<br/>(Future)"]
+    end
+
+    HTTP --> CTRL
+    CTRL --> UC1
+    CTRL --> UC2
+    CTRL --> UC3
+    CTRL --> UC4
+    
+    UC1 --> SERVICE
+    UC2 --> SERVICE
+    UC3 --> SERVICE
+    UC4 --> SERVICE
+    
+    SERVICE --> ENTITY
+    SERVICE --> RULES
+    SERVICE --> REPO_IF
+    
+    REPO_IF --> INMEM
+    REPO_IF -.-> FUTURE
+
+    style DRIVING fill:#dbeafe,stroke:#2563eb
+    style PORTS_IN fill:#dcfce7,stroke:#16a34a
+    style CORE fill:#fef9c3,stroke:#ca8a04
+    style PORTS_OUT fill:#f3e8ff,stroke:#9333ea
+    style DRIVEN fill:#ffe4e6,stroke:#e11d48
+            </div>
+            <div class="legend">
+                <h4>Principe Hexagonal</h4>
+                <ul>
+                    <li><span class="color-box" style="background:#dbeafe;border:1px solid #2563eb"></span> Driving (adaptateurs primaires) - Appellent l'application</li>
+                    <li><span class="color-box" style="background:#dcfce7;border:1px solid #16a34a"></span> Ports IN - Interfaces des use cases</li>
+                    <li><span class="color-box" style="background:#fef9c3;border:1px solid #ca8a04"></span> Domain Core - Logique métier pure</li>
+                    <li><span class="color-box" style="background:#f3e8ff;border:1px solid #9333ea"></span> Ports OUT - Interfaces de persistence</li>
+                    <li><span class="color-box" style="background:#ffe4e6;border:1px solid #e11d48"></span> Driven (adaptateurs secondaires) - Appelés par l'application</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Diagramme 3: Modèle de Données -->
+        <div class="diagram-section">
+            <h2>3. Modèle de Données (DDD)</h2>
+            <div class="mermaid">
+classDiagram
+    class Card {
+        -CardId id
+        -String question
+        -String answer
+        -String tag
+        -Category category
+        -LocalDate lastAnswerDate
+        +create(question, answer, tag) Card
+        +answerCorrectly(date) void
+        +answerIncorrectly(date) void
+        +shouldBeReviewedOn(date) boolean
+        +checkAnswer(userAnswer) boolean
+    }
+
+    class CardId {
+        -String value
+        +generate() CardId
+        +of(value) CardId
+        +getValue() String
+    }
+
+    class Category {
+        <<enumeration>>
+        FIRST = 1 jour
+        SECOND = 2 jours
+        THIRD = 4 jours
+        FOURTH = 8 jours
+        FIFTH = 16 jours
+        SIXTH = 32 jours
+        SEVENTH = 64 jours
+        DONE
+        +next() Category
+        +getFrequencyInDays() int
+        +isDone() boolean
+    }
+
+    class User {
+        -UserId id
+        -String username
+        -String email
+        -LocalTime notificationTime
+        +create(username, email) User
+    }
+
+    class CardRepository {
+        <<interface>>
+        +save(card) Card
+        +findById(id) Optional~Card~
+        +findAll() List~Card~
+        +findByTags(tags) List~Card~
+        +deleteById(id) void
+    }
+
+    Card --> CardId : identifié par
+    Card --> Category : a une
+    User --> "0..*" Card : possède
+    CardRepository --> Card : gère
+            </div>
+        </div>
+
+        <!-- Diagramme 4: Flux de données -->
+        <div class="diagram-section">
+            <h2>4. Flux de Données - Création d'une Carte</h2>
+            <div class="mermaid">
+sequenceDiagram
+    participant U as 👤 Utilisateur
+    participant F as 🌐 Frontend
+    participant C as 🔌 Controller
+    participant S as ⚙️ CardService
+    participant E as 📦 Card Entity
+    participant R as 💾 Repository
+
+    U->>F: Remplit le formulaire
+    F->>C: POST /cards {question, answer, tag}
+    C->>C: Validation DTO
+    C->>S: CreateCardCommand
+    S->>E: Card.create(question, answer, tag)
+    Note over E: category = FIRST<br/>id = UUID généré
+    E-->>S: Card créée
+    S->>R: save(card)
+    R-->>S: Card persistée
+    S-->>C: Card
+    C->>C: Mapping → CardDTO
+    C-->>F: 201 Created + CardDTO
+    F-->>U: Affiche confirmation
+            </div>
+        </div>
+
+        <!-- Diagramme 5: Flux Quiz -->
+        <div class="diagram-section">
+            <h2>5. Flux de Données - Réponse au Quiz</h2>
+            <div class="mermaid">
+sequenceDiagram
+    participant U as 👤 Utilisateur
+    participant F as 🌐 Frontend
+    participant C as 🔌 Controller
+    participant S as ⚙️ CardService
+    participant E as 📦 Card Entity
+    participant R as 💾 Repository
+
+    U->>F: Clique "Correct" ✓
+    F->>C: PATCH /cards/{id}/answer {isValid: true}
+    C->>S: AnswerCardCommand(id, true)
+    S->>R: findById(cardId)
+    R-->>S: Card (category=FIRST)
+    S->>E: card.answerCorrectly(today)
+    Note over E: category: FIRST → SECOND<br/>lastAnswerDate = today
+    S->>R: save(card)
+    R-->>S: OK
+    S-->>C: void
+    C-->>F: 204 No Content
+    F-->>U: Affiche carte suivante
+            </div>
+        </div>
+
+        <!-- Diagramme 6: États du système Leitner -->
+        <div class="diagram-section">
+            <h2>6. Machine à États - Système de Leitner</h2>
+            <div class="mermaid">
+stateDiagram-v2
+    [*] --> FIRST: Nouvelle carte
+
+    FIRST --> SECOND: ✓ Bonne réponse
+    SECOND --> THIRD: ✓ Bonne réponse
+    THIRD --> FOURTH: ✓ Bonne réponse
+    FOURTH --> FIFTH: ✓ Bonne réponse
+    FIFTH --> SIXTH: ✓ Bonne réponse
+    SIXTH --> SEVENTH: ✓ Bonne réponse
+    SEVENTH --> DONE: ✓ Bonne réponse
+
+    SECOND --> FIRST: ✗ Mauvaise réponse
+    THIRD --> FIRST: ✗ Mauvaise réponse
+    FOURTH --> FIRST: ✗ Mauvaise réponse
+    FIFTH --> FIRST: ✗ Mauvaise réponse
+    SIXTH --> FIRST: ✗ Mauvaise réponse
+    SEVENTH --> FIRST: ✗ Mauvaise réponse
+
+    DONE --> [*]: 🎉 Carte apprise!
+
+    note right of FIRST: 📅 Tous les jours
+    note right of SECOND: 📅 Tous les 2 jours
+    note right of THIRD: 📅 Tous les 4 jours
+    note right of FOURTH: 📅 Tous les 8 jours
+    note right of FIFTH: 📅 Tous les 16 jours
+    note right of SIXTH: 📅 Tous les 32 jours
+    note right of SEVENTH: 📅 Tous les 64 jours
+            </div>
+        </div>
+
+        <!-- Diagramme 7: Structure des packages -->
+        <div class="diagram-section">
+            <h2>7. Structure des Packages (Backend)</h2>
+            <div class="mermaid">
+graph TB
+    subgraph ROOT["com.leitner"]
+        APP["LeitnerApplication.java"]
+        
+        subgraph DOMAIN["domain"]
+            subgraph MODEL["model"]
+                M1["Card.java"]
+                M2["CardId.java"]
+                M3["Category.java"]
+                M4["User.java"]
+            end
+            subgraph PORT["port"]
+                subgraph IN["in"]
+                    I1["CreateCardUseCase"]
+                    I2["GetCardsUseCase"]
+                    I3["GetQuizCardsUseCase"]
+                    I4["AnswerCardUseCase"]
+                end
+                subgraph OUT["out"]
+                    O1["CardRepository"]
+                    O2["UserRepository"]
+                end
+            end
+            subgraph SVC["service"]
+                S1["CardService.java"]
+            end
+            subgraph EXC["exception"]
+                E1["CardNotFoundException"]
+            end
+        end
+        
+        subgraph INFRA["infrastructure"]
+            subgraph ADAPTER["adapter"]
+                subgraph AIN["in/rest"]
+                    A1["CardController"]
+                    A2["GlobalExceptionHandler"]
+                    subgraph DTO["dto"]
+                        D1["CardDTO"]
+                        D2["CreateCardRequest"]
+                        D3["AnswerRequest"]
+                    end
+                end
+                subgraph AOUT["out/persistence"]
+                    P1["InMemoryCardRepository"]
+                end
+            end
+            subgraph CONFIG["config"]
+                C1["BeanConfiguration"]
+            end
+        end
+    end
+
+    style DOMAIN fill:#dcfce7,stroke:#16a34a
+    style INFRA fill:#fef3c7,stroke:#d97706
+    style MODEL fill:#dbeafe,stroke:#2563eb
+    style PORT fill:#f3e8ff,stroke:#9333ea
+            </div>
+        </div>
+
+        <!-- Diagramme 8: API REST -->
+        <div class="diagram-section">
+            <h2>8. API REST - Endpoints</h2>
+            <div class="mermaid">
+graph LR
+    subgraph API["🔌 API REST - /cards"]
+        GET1["GET /cards<br/>Liste toutes les cartes"]
+        GET2["GET /cards?tags=X,Y<br/>Filtre par tags"]
+        POST["POST /cards<br/>Crée une carte"]
+        QUIZ["GET /cards/quizz<br/>Cartes du jour"]
+        QUIZ2["GET /cards/quizz?date=...<br/>Cartes d'une date"]
+        PATCH["PATCH /cards/{id}/answer<br/>Répond à une carte"]
+    end
+
+    subgraph RESP["📤 Réponses"]
+        R200["200 OK<br/>Liste de cartes"]
+        R201["201 Created<br/>Carte créée"]
+        R204["204 No Content<br/>Réponse enregistrée"]
+        R400["400 Bad Request<br/>Données invalides"]
+        R404["404 Not Found<br/>Carte inexistante"]
+    end
+
+    GET1 --> R200
+    GET2 --> R200
+    POST --> R201
+    POST --> R400
+    QUIZ --> R200
+    QUIZ2 --> R200
+    PATCH --> R204
+    PATCH --> R400
+    PATCH --> R404
+
+    style API fill:#dbeafe,stroke:#2563eb
+    style RESP fill:#dcfce7,stroke:#16a34a
+            </div>
+        </div>
+
+    </div>
+
+    <button class="print-btn" onclick="window.print()">🖨️ Imprimer / PDF</button>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

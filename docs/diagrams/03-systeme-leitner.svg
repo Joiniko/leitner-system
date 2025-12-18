@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 650">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.2"/>
+    </filter>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#667eea"/>
+      <stop offset="100%" style="stop-color:#764ba2"/>
+    </linearGradient>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1000" height="650" fill="#f8fafc"/>
+  
+  <!-- Title -->
+  <rect x="0" y="0" width="1000" height="50" fill="url(#headerGrad)"/>
+  <text x="500" y="32" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="20" font-weight="bold">
+    🧠 Système de Leitner - Machine à États
+  </text>
+  
+  <!-- Start -->
+  <circle cx="80" cy="300" r="20" fill="#1f2937"/>
+  <text x="80" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#64748b">Nouvelle carte</text>
+  
+  <!-- Category 1 - FIRST -->
+  <rect x="130" y="260" width="100" height="80" rx="10" fill="#fef2f2" stroke="#dc2626" stroke-width="2" filter="url(#shadow)"/>
+  <text x="180" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#dc2626">FIRST</text>
+  <text x="180" y="310" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#dc2626">Catégorie 1</text>
+  <text x="180" y="328" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">📅 1 jour</text>
+  
+  <!-- Category 2 - SECOND -->
+  <rect x="260" y="260" width="100" height="80" rx="10" fill="#fff7ed" stroke="#ea580c" stroke-width="2" filter="url(#shadow)"/>
+  <text x="310" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ea580c">SECOND</text>
+  <text x="310" y="310" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#ea580c">Catégorie 2</text>
+  <text x="310" y="328" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">📅 2 jours</text>
+  
+  <!-- Category 3 - THIRD -->
+  <rect x="390" y="260" width="100" height="80" rx="10" fill="#fefce8" stroke="#ca8a04" stroke-width="2" filter="url(#shadow)"/>
+  <text x="440" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ca8a04">THIRD</text>
+  <text x="440" y="310" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#ca8a04">Catégorie 3</text>
+  <text x="440" y="328" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">📅 4 jours</text>
+  
+  <!-- Category 4 - FOURTH -->
+  <rect x="520" y="260" width="100" height="80" rx="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="2" filter="url(#shadow)"/>
+  <text x="570" y="290" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#16a34a">FOURTH</text>
+  <text x="570" y="310" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#16a34a">Catégorie 4</text>
+  <text x="570" y="328" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">📅 8 jours</text>
+  
+  <!-- Category 5 - FIFTH -->
+  <rect x="260" y="380" width="100" height="80" rx="10" fill="#ecfeff" stroke="#0891b2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="310" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#0891b2">FIFTH</text>
+  <text x="310" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#0891b2">Catégorie 5</text>
+  <text x="310" y="448" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">📅 16 jours</text>
+  
+  <!-- Category 6 - SIXTH -->
+  <rect x="390" y="380" width="100" height="80" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="2" filter="url(#shadow)"/>
+  <text x="440" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2563eb">SIXTH</text>
+  <text x="440" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#2563eb">Catégorie 6</text>
+  <text x="440" y="448" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">📅 32 jours</text>
+  
+  <!-- Category 7 - SEVENTH -->
+  <rect x="520" y="380" width="100" height="80" rx="10" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2" filter="url(#shadow)"/>
+  <text x="570" y="410" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#7c3aed">SEVENTH</text>
+  <text x="570" y="430" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#7c3aed">Catégorie 7</text>
+  <text x="570" y="448" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">📅 64 jours</text>
+  
+  <!-- DONE -->
+  <rect x="680" y="320" width="120" height="80" rx="40" fill="#dcfce7" stroke="#16a34a" stroke-width="3" filter="url(#shadow)"/>
+  <text x="740" y="355" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#16a34a">🎉 DONE</text>
+  <text x="740" y="378" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#16a34a">Carte apprise!</text>
+  
+  <!-- End -->
+  <circle cx="860" cy="360" r="15" fill="white" stroke="#1f2937" stroke-width="3"/>
+  <circle cx="860" cy="360" r="10" fill="#1f2937"/>
+  
+  <!-- Arrows - Correct answers (green) -->
+  <line x1="100" y1="300" x2="128" y2="300" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="230" y1="300" x2="258" y2="300" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="360" y1="300" x2="388" y2="300" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="490" y1="300" x2="518" y2="300" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  
+  <!-- Arrow from FOURTH to FIFTH (down) -->
+  <path d="M570 340 L570 360 L360 360 L360 378" fill="none" stroke="#16a34a" stroke-width="2"/>
+  <polygon points="360,378 355,368 365,368" fill="#16a34a"/>
+  
+  <line x1="360" y1="420" x2="388" y2="420" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="490" y1="420" x2="518" y2="420" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="620" y1="420" x2="678" y2="370" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <line x1="800" y1="360" x2="843" y2="360" stroke="#16a34a" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  
+  <!-- Labels for correct arrows -->
+  <text x="215" y="288" font-family="Arial, sans-serif" font-size="9" fill="#16a34a">✓</text>
+  <text x="345" y="288" font-family="Arial, sans-serif" font-size="9" fill="#16a34a">✓</text>
+  <text x="475" y="288" font-family="Arial, sans-serif" font-size="9" fill="#16a34a">✓</text>
+  <text x="605" y="288" font-family="Arial, sans-serif" font-size="9" fill="#16a34a">✓</text>
+  <text x="345" y="408" font-family="Arial, sans-serif" font-size="9" fill="#16a34a">✓</text>
+  <text x="475" y="408" font-family="Arial, sans-serif" font-size="9" fill="#16a34a">✓</text>
+  <text x="640" y="395" font-family="Arial, sans-serif" font-size="9" fill="#16a34a">✓</text>
+  
+  <!-- Arrows - Wrong answers (red) - all go back to FIRST -->
+  <path d="M310 260 Q310 180 180 180 Q150 180 150 258" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="150,258 145,248 155,248" fill="#dc2626"/>
+  
+  <path d="M440 260 Q440 160 180 160 Q140 160 140 258" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="140,258 135,248 145,248" fill="#dc2626"/>
+  
+  <path d="M570 260 Q570 140 180 140 Q130 140 130 258" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="130,258 125,248 135,248" fill="#dc2626"/>
+  
+  <path d="M310 460 Q310 540 180 540 Q120 540 120 342" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="120,342 115,352 125,352" fill="#dc2626"/>
+  
+  <path d="M440 460 Q440 560 180 560 Q110 560 110 342" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="110,342 105,352 115,352" fill="#dc2626"/>
+  
+  <path d="M570 460 Q570 580 180 580 Q100 580 100 342" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="100,342 95,352 105,352" fill="#dc2626"/>
+  
+  <!-- Legend -->
+  <rect x="700" y="70" width="280" height="180" rx="10" fill="white" stroke="#e5e7eb" stroke-width="1" filter="url(#shadow)"/>
+  <text x="840" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#374151">Légende</text>
+  
+  <line x1="720" y1="115" x2="770" y2="115" stroke="#16a34a" stroke-width="2"/>
+  <text x="780" y="120" font-family="Arial, sans-serif" font-size="11" fill="#374151">✓ Bonne réponse → Catégorie +1</text>
+  
+  <line x1="720" y1="145" x2="770" y2="145" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="780" y="150" font-family="Arial, sans-serif" font-size="11" fill="#374151">✗ Mauvaise réponse → FIRST</text>
+  
+  <circle cx="745" cy="175" r="8" fill="#1f2937"/>
+  <text x="780" y="180" font-family="Arial, sans-serif" font-size="11" fill="#374151">État initial / final</text>
+  
+  <rect x="720" y="195" width="50" height="25" rx="5" fill="#fef2f2" stroke="#dc2626"/>
+  <text x="780" y="212" font-family="Arial, sans-serif" font-size="11" fill="#374151">Catégorie (fréquence)</text>
+  
+  <!-- Frequency table -->
+  <rect x="50" y="480" width="900" height="150" rx="10" fill="white" stroke="#e5e7eb" stroke-width="1" filter="url(#shadow)"/>
+  <text x="500" y="510" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#374151">📊 Fréquences de révision</text>
+  
+  <line x1="70" y1="530" x2="930" y2="530" stroke="#e5e7eb" stroke-width="1"/>
+  
+  <!-- Table headers -->
+  <text x="140" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#374151">FIRST</text>
+  <text x="255" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#374151">SECOND</text>
+  <text x="370" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#374151">THIRD</text>
+  <text x="485" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#374151">FOURTH</text>
+  <text x="600" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#374151">FIFTH</text>
+  <text x="715" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#374151">SIXTH</text>
+  <text x="830" y="555" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#374151">SEVENTH</text>
+  
+  <!-- Table values -->
+  <text x="140" y="585" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#dc2626">1</text>
+  <text x="255" y="585" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ea580c">2</text>
+  <text x="370" y="585" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#ca8a04">4</text>
+  <text x="485" y="585" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#16a34a">8</text>
+  <text x="600" y="585" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#0891b2">16</text>
+  <text x="715" y="585" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#2563eb">32</text>
+  <text x="830" y="585" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#7c3aed">64</text>
+  
+  <text x="140" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">jour</text>
+  <text x="255" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">jours</text>
+  <text x="370" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">jours</text>
+  <text x="485" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">jours</text>
+  <text x="600" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">jours</text>
+  <text x="715" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">jours</text>
+  <text x="830" y="610" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#666">jours</text>
+</svg>
