@@ -1,0 +1,183 @@
+openapi: 3.0.3
+info:
+  title: Leitner System API
+  description: API pour le système d'apprentissage par répétition espacée de Leitner
+  version: 1.0.0
+  
+servers:
+  - url: http://localhost:8080
+    description: Serveur de développement
+
+paths:
+  /cards:
+    get:
+      summary: Récupère toutes les cartes
+      description: Retourne la liste de toutes les cartes, optionnellement filtrées par tags
+      parameters:
+        - name: tags
+          in: query
+          description: Liste des tags pour filtrer les cartes
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+          style: form
+          explode: true
+      responses:
+        '200':
+          description: Liste des cartes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Card'
+    
+    post:
+      summary: Crée une nouvelle carte
+      description: Crée une nouvelle carte d'apprentissage. La carte est automatiquement placée en catégorie FIRST.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardUserData'
+      responses:
+        '201':
+          description: Carte créée avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card'
+        '400':
+          description: Données invalides
+
+  /cards/quizz:
+    get:
+      summary: Récupère les cartes du quiz
+      description: Retourne les cartes à réviser pour une date donnée selon le système de Leitner
+      parameters:
+        - name: date
+          in: query
+          description: Date du quiz (format YYYY-MM-DD). Si non fournie, utilise la date du jour.
+          required: false
+          schema:
+            type: string
+            format: date
+            example: "2024-01-15"
+      responses:
+        '200':
+          description: Liste des cartes à réviser
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Card'
+
+  /cards/{cardId}/answer:
+    patch:
+      summary: Enregistre une réponse
+      description: |
+        Enregistre la réponse de l'utilisateur pour une carte.
+        - Si isValid=true : la carte passe à la catégorie suivante
+        - Si isValid=false : la carte retourne en catégorie FIRST
+      parameters:
+        - name: cardId
+          in: path
+          required: true
+          description: Identifiant de la carte
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - isValid
+              properties:
+                isValid:
+                  type: boolean
+                  description: true si la réponse est correcte, false sinon
+      responses:
+        '204':
+          description: Réponse enregistrée avec succès
+        '404':
+          description: Carte non trouvée
+        '400':
+          description: Données invalides
+
+components:
+  schemas:
+    Card:
+      type: object
+      required:
+        - id
+        - question
+        - answer
+        - category
+      properties:
+        id:
+          type: string
+          description: Identifiant unique de la carte
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        question:
+          type: string
+          description: La question de la carte
+          example: "Quelle est la capitale de la France ?"
+        answer:
+          type: string
+          description: La réponse attendue
+          example: "Paris"
+        tag:
+          type: string
+          description: Tag optionnel pour catégoriser la carte
+          example: "Géographie"
+        category:
+          $ref: '#/components/schemas/Category'
+    
+    CardUserData:
+      type: object
+      required:
+        - question
+        - answer
+      properties:
+        question:
+          type: string
+          description: La question de la carte
+          minLength: 1
+          example: "Quelle est la capitale de la France ?"
+        answer:
+          type: string
+          description: La réponse attendue
+          minLength: 1
+          example: "Paris"
+        tag:
+          type: string
+          description: Tag optionnel pour catégoriser la carte
+          example: "Géographie"
+    
+    Category:
+      type: string
+      enum:
+        - FIRST
+        - SECOND
+        - THIRD
+        - FOURTH
+        - FIFTH
+        - SIXTH
+        - SEVENTH
+        - DONE
+      description: |
+        Catégorie de la carte dans le système de Leitner:
+        - FIRST: révision tous les jours
+        - SECOND: révision tous les 2 jours
+        - THIRD: révision tous les 4 jours
+        - FOURTH: révision tous les 8 jours
+        - FIFTH: révision tous les 16 jours
+        - SIXTH: révision tous les 32 jours
+        - SEVENTH: révision tous les 64 jours
+        - DONE: carte définitivement apprise

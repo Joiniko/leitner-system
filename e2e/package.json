@@ -1,0 +1,16 @@
+{
+  "name": "leitner-e2e",
+  "version": "1.0.0",
+  "description": "Tests E2E pour le système de Leitner avec Playwright et Cucumber",
+  "scripts": {
+    "test": "cucumber-js",
+    "test:headed": "HEADLESS=false cucumber-js"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.0.0",
+    "@playwright/test": "^1.40.0",
+    "playwright": "^1.40.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
