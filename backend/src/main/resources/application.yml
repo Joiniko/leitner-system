@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: leitner-system
+
+# Configuration CORS pour le frontend
+cors:
+  allowed-origins: "*"
+  allowed-methods: GET, POST, PATCH, PUT, DELETE, OPTIONS
+  allowed-headers: "*"
+
+# Configuration des logs
+logging:
+  level:
+    com.leitner: DEBUG
+    org.springframework.web: INFO
